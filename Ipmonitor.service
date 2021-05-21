@@ -1,0 +1,15 @@
+[Unit]
+Description=DHCP IP Monitor service
+StopWhenUnneeded=false
+After=systemd-hostnamed.service
+Wants=systemd-hostnamed.service
+
+[Service]
+Restart=always
+RestartSec=5
+ExecStartPre=/bin/sh -c 'until ping -c1 google.com; do sleep 10; done;'
+ExecStart=/usr/bin/ipmon
+
+[Install]
+WantedBy=multi-user.target
+
