@@ -1,11 +1,13 @@
 SUMMARY = "DHCP Ipmonitor application"
 SECTION = "examples"
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-SRC_URI_append += "file://CMakeLists.txt"
-SRC_URI_append += "file://src/"
-SRC_URI_append += "file://service_files/"
+LICENSE = "CLOSED"
+LIC_FILES_CHKSUM = ""
+
+SRC_URI:append = "file://CMakeLists.txt "
+SRC_URI:append = "file://src/ "
+#SRC_URI:append = "file://systemd/ "
+SRC_URI:append = "file://systemd/Ipmonitor.service "
 
 DEPENDS = "boost nlohmann-json sdbusplus"
 
@@ -13,19 +15,15 @@ S = "${WORKDIR}"
 
 inherit cmake systemd
 
-SYSTEMD_SERVICE_${PN} = "Ipmonitor.service"
+SYSTEMD_AUTO_ENABLE = "enable"
+SYSTEMD_SERVICE:${PN} = "Ipmonitor.service"
 
-#FILES_${PN} += "/usr/bin/"
-#FILES_${PN} += "/lib/systemd/system/"
+FILES:${PN}:append = " {systemd_unitdir}/system/Ipmonitor.service"
 
-do_install() {
+do_install(){
          install -d ${D}${bindir}
          install -m 0755 ipmon ${D}${bindir}
-	 #cp ${WORKDIR}/src/configure_usb_gadget.sh  ${D}${bindir}
 
-         install -d ${D}${base_libdir}/systemd/system
-         install -m 0644 ${S}/service_files/Ipmonitor.service ${D}${base_libdir}/systemd/system
-
-         #install -d ${D}{systemd_unitdir}/system
-         #install -m 0644 ${WORKDIR}/xyz.openbmc_project.Ipmonitor.service ${D}{systemd_unitdir}/system/
+         install -d ${D}${systemd_unitdir}/system/
+         install -m 0644 ${WORKDIR}/systemd/Ipmonitor.service ${D}${systemd_unitdir}/system/
 }
