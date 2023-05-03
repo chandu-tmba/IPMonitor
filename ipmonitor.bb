@@ -6,8 +6,8 @@ LIC_FILES_CHKSUM = ""
 
 SRC_URI:append = "file://CMakeLists.txt "
 SRC_URI:append = "file://src/ "
-#SRC_URI:append = "file://systemd/ "
-SRC_URI:append = "file://systemd/Ipmonitor.service "
+SRC_URI:append = "file://systemd/ "
+
 
 DEPENDS = "boost nlohmann-json sdbusplus"
 
