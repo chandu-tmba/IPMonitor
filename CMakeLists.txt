@@ -45,7 +45,7 @@ set (
 
 
 
-add_executable (ipmon src/IpMonitor.cpp ${HOSTINV_SRC_FILES})
+add_executable (ipmon src/IpMonitor.cpp)
 add_dependencies (ipmon sdbusplus-project)
 target_link_libraries (ipmon ${MONITOR_LINK_LIBS})
 
